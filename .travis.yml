@@ -60,7 +60,7 @@ after_success:
     - echo "" >> ${README_FILE}
     - echo "You must have homebrew installed on your machine to be able to run these applications." >> ${README_FILE}
     - echo "\`\`\`" >> ${README_FILE}
-    - echo "ruby -e \"$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)\"" >> ${README_FILE}
+    - echo "ruby -e \"\$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)\"" >> ${README_FILE}
     - echo "brew doctor" >> ${README_FILE}
     - echo "brew update" >> ${README_FILE}
     - echo "brew install qt" >> ${README_FILE}
