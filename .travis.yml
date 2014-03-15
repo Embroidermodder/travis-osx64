@@ -27,6 +27,7 @@ script:
     - ls
     - test -e ./embroidermodder2.app
     - sudo macdeployqt ./embroidermodder2.app
+    - otool -L ./embroidermodder2.app/Contents/MacOS/embroidermodder2
     # Grab the help submodule and prepare it for copying
     - git clone https://github.com/Embroidermodder/Embroidermodder.github.io.git
     - mv Embroidermodder.github.io help-submodule
