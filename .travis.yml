@@ -1,0 +1,99 @@
+language:
+    - objective-c
+
+before_install:
+    - PLATFORM=osx64
+    - export NIGHTLY_DATE=`date`
+    - export NIGHTLY_BUILD_NUMBER=`date +%Y%m%d%H%M%S`
+    - export NIGHTLY_HASH=`git ls-remote git://github.com/Embroidermodder/Embroidermodder.git | grep refs/heads/master | cut -f 1`
+    - brew update
+
+install:
+    - brew install qt
+
+before_script:
+    - uname -a
+
+script:
+    - git clone git://github.com/Embroidermodder/Embroidermodder.git
+    - cd ./Embroidermodder
+    # Do the build
+    - ROOT_BUILD_DIR=`pwd`
+    - cd project-files/qmake
+    - qmake CONFIG+=deploy
+    - make
+    - ./libembroidery-convert
+    - cd ../../embroidermodder2
+    - ls
+    - test -e ./embroidermodder2.app
+    # Grab the help submodule and prepare it for copying
+    - git clone https://github.com/Embroidermodder/Embroidermodder.github.io.git
+    - mv Embroidermodder.github.io help-submodule
+    - rm -rf help-submodule/.git
+    - rm -f help-submodule/.gitignore
+    - rm -f help-submodule/documentation.pro
+
+after_success:
+    # Setup git for pushing into another repository
+    - git config --global user.email \<\>
+    - git config --global user.name "Embroidermodder-Travis"
+    - cd ~
+    - git clone https://Embroidermodder-Travis:${NIGHTLY_TOKEN}@github.com/Embroidermodder/nightly-ci.git
+    - cd nightly-ci
+    - git remote rm origin
+    - git remote add origin https://Embroidermodder-Travis:${NIGHTLY_TOKEN}@github.com/Embroidermodder/nightly-ci.git
+    - git fetch origin
+    - git checkout -b ${PLATFORM} origin/${PLATFORM}
+    # Remove previous build
+    - rm -rf embroidermodder2
+    - rm -rf libembroidery-convert
+    # Generate a new README file
+    - README_FILE=README.md
+    - echo "" > ${README_FILE}
+    - echo "Nightly Build" >> ${README_FILE}
+    - echo "------------------------------" >> ${README_FILE}
+    - echo "" >> ${README_FILE}
+    - echo "* Embroidermodder Nightly Build Date = ${NIGHTLY_DATE}" >> ${README_FILE}
+    - echo "* Embroidermodder Nightly Build Number = ${NIGHTLY_BUILD_NUMBER}" >> ${README_FILE}
+    - echo "* Embroidermodder Nightly Hash = [${NIGHTLY_HASH}](https://github.com/Embroidermodder/Embroidermodder/commit/${NIGHTLY_HASH})" >> ${README_FILE}
+    - echo "* Travis Build ID = [${TRAVIS_BUILD_ID}](https://travis-ci.org/Embroidermodder/Embroidermodder/builds/${TRAVIS_BUILD_ID})" >> ${README_FILE}
+    - echo "" >> ${README_FILE}
+    - echo "You must have homebrew installed on your machine to be able to run these applications." >> ${README_FILE}
+    - echo "\`\`\`" >> ${README_FILE}
+    - echo "ruby -e \"$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)\"" >> ${README_FILE}
+    - echo "brew doctor" >> ${README_FILE}
+    - echo "brew update" >> ${README_FILE}
+    - echo "brew install qt" >> ${README_FILE}
+    - echo "\`\`\`" >> ${README_FILE}
+    - echo "" >> ${README_FILE}
+    - echo "This is a development build for ${PLATFORM} and may be unstable or even unusable." >> ${README_FILE}
+    - echo "USE AT YOUR OWN RISK AND HAVE FUN!" >> ${README_FILE}
+    - echo "" >> ${README_FILE}
+    # Embroidermodder 2
+    - mkdir embroidermodder2
+    - cp -f  ${ROOT_BUILD_DIR}/embroidermodder2/embroidermodder2.app ./embroidermodder2/embroidermodder2.app
+    - cp -rf ${ROOT_BUILD_DIR}/embroidermodder2/commands             ./embroidermodder2/commands
+    # Use prepared help submodule so the commit doesn't fail
+    - cp -rf ${ROOT_BUILD_DIR}/embroidermodder2/help-submodule   ./embroidermodder2/help
+    - cp -rf ${ROOT_BUILD_DIR}/embroidermodder2/icons            ./embroidermodder2/icons
+    - cp -rf ${ROOT_BUILD_DIR}/embroidermodder2/images           ./embroidermodder2/images
+    - cp -rf ${ROOT_BUILD_DIR}/embroidermodder2/samples          ./embroidermodder2/samples
+    - cp -rf ${ROOT_BUILD_DIR}/embroidermodder2/translations     ./embroidermodder2/translations
+    - rm -f embroidermodder2/commands/commands.pro
+    # libembroidery-convert
+    - mkdir libembroidery-convert
+    - cp -f  ${ROOT_BUILD_DIR}/libembroidery-convert/libembroidery-convert ./libembroidery-convert/libembroidery-convert
+    - ls
+    - git add -A && git commit -m "Travis Build ${TRAVIS_BUILD_NUMBER} - Nightly Build ${NIGHTLY_BUILD_NUMBER}"
+    - git push origin ${PLATFORM} &>/dev/null
+
+env:
+  global:
+    - secure: "RNCfK/KAChQBmuGqA9kPe6KgosBHYiSsvqW6ySpQtqQ0Q7FS2mRy+NfhHbjwGk6/0rTcnclRRHNgmrBTCM6uSvqFTJ1IkH8CPV9BgaBaw0Z9jAU5mFBO0aTvBvm1eHhpteetRDfz3lo4+UjG3yYLCkDfAi4bsV2Um4H5jplFI2g="
+    
+notifications:
+  recipients:
+    - embroidermodder@gmail.com
+  email:
+    on_success: change
+    on_failure: always
