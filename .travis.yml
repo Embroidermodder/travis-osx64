@@ -60,7 +60,10 @@ after_success:
     - echo "* Embroidermodder Nightly Hash = [${NIGHTLY_HASH}](https://github.com/Embroidermodder/Embroidermodder/commit/${NIGHTLY_HASH})" >> ${README_FILE}
     - echo "* Travis Build ID = [${TRAVIS_BUILD_ID}](https://travis-ci.org/Embroidermodder/Embroidermodder/builds/${TRAVIS_BUILD_ID})" >> ${README_FILE}
     - echo "" >> ${README_FILE}
-    - echo "You must have homebrew installed on your machine to be able to run these applications." >> ${README_FILE}
+    - echo "When running the applications for the first time, you will need to right click on it and select Open." >> ${README_FILE}
+    - echo "After that, you will be able to launch the applications normally by double clicking on them or launch them from the dock." >> ${README_FILE}
+    - echo "" >> ${README_FILE}
+    - echo "If you are still encountering problems, you may need to have homebrew installed on your machine to be able to run these applications." >> ${README_FILE}
     - echo "\`\`\`" >> ${README_FILE}
     - echo "ruby -e \"\$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)\"" >> ${README_FILE}
     - echo "brew doctor" >> ${README_FILE}
