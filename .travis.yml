@@ -16,7 +16,8 @@ before_script:
     - uname -a
     - sudo /usr/libexec/locate.updatedb
     - locate qmake
-    - export QMAKE_DIRECTORY=/usr/local/Cellar/qt5/5.2.1/bin/
+    - locate macdeployqt
+    - export QT_BIN_DIRECTORY=/usr/local/Cellar/qt5/5.2.1/bin/
 
 script:
     - git clone git://github.com/Embroidermodder/Embroidermodder.git
@@ -24,13 +25,13 @@ script:
     # Do the build
     - ROOT_BUILD_DIR=`pwd`
     - cd project-files/qmake
-    - ${QMAKE_DIRECTORY}qmake CONFIG+=deploy
+    - ${QT_BIN_DIRECTORY}qmake CONFIG+=deploy
     - make
     - ./libembroidery-convert
     - cd ../../embroidermodder2
     - ls
     - test -e ./embroidermodder2.app
-    - sudo macdeployqt ./embroidermodder2.app
+    - sudo ${QT_BIN_DIRECTORY}macdeployqt ./embroidermodder2.app
     # otool -L ./embroidermodder2.app/Contents/MacOS/embroidermodder2
     # Grab the help submodule and prepare it for copying
     - git clone https://github.com/Embroidermodder/Embroidermodder.github.io.git
