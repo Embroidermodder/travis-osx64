@@ -9,9 +9,10 @@ before_install:
     - brew update
 
 install:
-    - brew install qt
+    - brew install qt5
 
 before_script:
+    - sw_vers -productVersion
     - uname -a
 
 script:
@@ -68,7 +69,7 @@ after_success:
     - echo "ruby -e \"\$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)\"" >> ${README_FILE}
     - echo "brew doctor" >> ${README_FILE}
     - echo "brew update" >> ${README_FILE}
-    - echo "brew install qt" >> ${README_FILE}
+    - echo "brew install qt5" >> ${README_FILE}
     - echo "\`\`\`" >> ${README_FILE}
     - echo "" >> ${README_FILE}
     - echo "This is a development build for ${PLATFORM} and may be unstable or even unusable." >> ${README_FILE}
