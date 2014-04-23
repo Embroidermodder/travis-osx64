@@ -99,7 +99,7 @@ after_success:
 
 env:
   global:
-    - secure: "RNCfK/KAChQBmuGqA9kPe6KgosBHYiSsvqW6ySpQtqQ0Q7FS2mRy+NfhHbjwGk6/0rTcnclRRHNgmrBTCM6uSvqFTJ1IkH8CPV9BgaBaw0Z9jAU5mFBO0aTvBvm1eHhpteetRDfz3lo4+UjG3yYLCkDfAi4bsV2Um4H5jplFI2g="
+    - secure: "rm5bjJFSYiPzmb6Hoj0t3VNR0hxg0HTE0USzN6zpiIq8DuTla4r6rE9v/OS4aEEcQPZTWGlJb1xJJnpL0ysWMAYllLv/c5J5vSZhiaBxgW5ri+RuSK3dW5GyThksquBvbvljWH/ytEffRO1DxZ0oFHR5rWzwcjRrkdf6lTdXU7A="
     
 notifications:
   recipients:
