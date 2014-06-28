@@ -17,7 +17,7 @@ before_script:
     - sudo /usr/libexec/locate.updatedb
     - locate qmake
     - locate macdeployqt
-    - export QT_BIN_DIRECTORY=/usr/local/Cellar/qt5/5.3.0/bin/
+    - export QT_BIN_DIRECTORY=/usr/local/Cellar/qt5/5.3.1/bin/
 
 script:
     - git clone git://github.com/Embroidermodder/Embroidermodder.git
