@@ -85,6 +85,7 @@ after_success:
     - cp -rf ${ROOT_BUILD_DIR}/embroidermodder2/commands             ./embroidermodder2/commands
     # Use prepared help submodule so the commit doesn't fail
     - cp -rf ${ROOT_BUILD_DIR}/embroidermodder2/help-submodule   ./embroidermodder2/help
+    - cp -rf ${ROOT_BUILD_DIR}/embroidermodder2/help-submodule   ./embroidermodder2/embroidermodder2.app/Contents/MacOS/help
     - cp -rf ${ROOT_BUILD_DIR}/embroidermodder2/icons            ./embroidermodder2/icons
     - cp -rf ${ROOT_BUILD_DIR}/embroidermodder2/images           ./embroidermodder2/images
     - cp -rf ${ROOT_BUILD_DIR}/embroidermodder2/samples          ./embroidermodder2/samples
