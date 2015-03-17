@@ -17,9 +17,9 @@ before_script:
     - sudo /usr/libexec/locate.updatedb
     - locate qmake
     - locate macdeployqt
-    - QT_QMAKE_VERSION_STRING=`qmake -v | grep 'Qt version' | sed 's/Using Qt version //' | awk -F" in" '{ print $1 }'`
-    - echo $QT_QMAKE_VERSION_STRING
-    - export QT_BIN_DIRECTORY=/usr/local/Cellar/qt5/$QT_QMAKE_VERSION_STRING/bin/
+    - QT_VERSION_STRING=`locate macdeployqt | cut -d'/' -f 6`
+    - echo $QT_VERSION_STRING
+    - export QT_BIN_DIRECTORY=/usr/local/Cellar/qt5/${QT_VERSION_STRING}/bin/
     - echo $QT_BIN_DIRECTORY
 
 script:
