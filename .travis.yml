@@ -1,6 +1,6 @@
-language:
-    - cpp
-
+language: cpp
+sudo: true
+os: osx
 before_install:
     - PLATFORM=osx64
     - export NIGHTLY_DATE=`date`
@@ -30,7 +30,7 @@ script:
     - cd ../../embroidermodder2
     - ls
     - test -e ./embroidermodder2.app
-    - sudo macdeployqt ./embroidermodder2.app
+    - macdeployqt ./embroidermodder2.app
     # otool -L ./embroidermodder2.app/Contents/MacOS/embroidermodder2
     # Grab the help submodule and prepare it for copying
     - git clone https://github.com/Embroidermodder/Embroidermodder.github.io.git
