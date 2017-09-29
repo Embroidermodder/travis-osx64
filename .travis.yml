@@ -1,9 +1,7 @@
 language: cpp
 sudo: true
 os: osx
-compiler:
-- gcc
-- clang
+compiler: clang
 
 before_install:
     - PLATFORM=osx64
