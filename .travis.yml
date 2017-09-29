@@ -1,18 +1,21 @@
 language: cpp
 sudo: true
 os: osx
+compiler:
+- gcc
+- clang
+
 before_install:
     - PLATFORM=osx64
     - export NIGHTLY_DATE=`date`
     - export NIGHTLY_BUILD_NUMBER=`date +%Y%m%d%H%M%S`
     - export NIGHTLY_HASH=`git ls-remote git://github.com/Embroidermodder/Embroidermodder.git | grep refs/heads/master | cut -f 1`
+    - brew update
 
 install:
-    - brew update
     - brew unlink node; brew install node
     - brew ls | grep -wq qt5 || brew install qt5
     - export PATH=$PATH:/usr/local/opt/qt5/bin
-    - brew install qt5
 
 before_script:
     - sw_vers -productVersion
